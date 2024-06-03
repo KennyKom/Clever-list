@@ -4,16 +4,6 @@
       <h1 class="main-page__headline">Tassker</h1>
       <burger-menu />
     </div>
-    <!-- <div class="main-page__dates-list-tip-wrapper">
-      <img
-        src="@/assets/icons/lamp.png"
-        alt="Tip: you can use Shift + Scroll to scroll horizontally"
-        class="main-page__dates-list-tip-img"
-      />
-      <span class="main-page__dates-list-tip">
-        You can use Shift + Scroll to scroll horizontally
-      </span>
-    </div> -->
     <dates-list class="main-page__dates-list" />
     <h2 class="main-page__tasks-list-headline">{{ getTasksListLabel }}</h2>
     <tasks-list class="main-page__tasks-list" />
@@ -104,13 +94,6 @@ export default {
     @media (max-width: $tablet-l) {
       display: none;
     }
-    // .main-page__dates-list-tip-img {
-    //   width: 20px;
-    //   height: 20px;
-    // }
-    // .main-page__dates-list-tip {
-    //   @include default-text(18px, 18px, $color-black);
-    // }
   }
   &__dates-list {
     margin-bottom: 40px;
