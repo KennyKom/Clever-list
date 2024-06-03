@@ -3,7 +3,7 @@
 
 ## [Task](https://drive.google.com/drive/folders/1tTw4EAVFFxwNLdVI1K9Edf84qLGusTbZ?usp=drive_link)
 
-## [Deploy](https://kennykom.github.io/Clever-to-do-list/)
+## [Deploy](http://10.202.46.157:8080/sign-in)
 
 ## How to run:
 
