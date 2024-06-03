@@ -1,24 +1,44 @@
-# my-project
+# Clever-to-do-list
+ 
 
-## Project setup
-```
-npm install
-```
+## [Task](https://drive.google.com/drive/folders/1tTw4EAVFFxwNLdVI1K9Edf84qLGusTbZ?usp=drive_link)
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## [Deploy](https://kennykom.github.io/Clever-to-do-list/)
 
-### Compiles and minifies for production
+## How to run:
+
+1. Clone this repository
+
 ```
-npm run build
+git clone https://github.com/kennykom/Clever-to-do-list.git
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
+2. Run `npm install` to install all the dependencies
+3. Create `.env` file & add necessary dependencies for Firebase
+4. Run the project `npm run serve`
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Folders structure
+```
+📦                      
+ ┣ 📂public     
+ ┣ 📂src   
+ ┣ 📂assets                      
+ ┃  ┣ 📂fonts
+ ┃  ┗ 📂icons
+ ┣ 📂components
+ ┃  ┗ 📂UI  
+ ┣ 📂mixins
+ ┣ 📂pages
+ ┣ 📂router
+ ┣ 📂services 
+ ┃  ┗ 📂firebase 
+ ┣ 📂store                  
+ ┗ 📂styles                     
+```
+## Stack
+- HTML
+- CSS
+- SCSS
+- JavaScript
+- Vue.js
+- Firestore DB
