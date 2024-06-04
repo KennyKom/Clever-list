@@ -98,10 +98,8 @@
         @confirmed="onDeleteConfirmation"
         @declined="deleteModalIsOpen = false"
       >
-        <template v-slot:headline>Deletion confirmation</template>
-        <template v-slot:text
-          >Are you sure you want to delete this task?</template
-        >
+        <template v-slot:headline>Delete</template>
+        <template v-slot:text>Wanna delete this task?</template>
       </app-modal-confirm>
     </teleport>
   </div>

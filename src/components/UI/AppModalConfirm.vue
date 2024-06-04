@@ -107,12 +107,16 @@ export default {
       justify-content: center;
       column-gap: 30px;
       .modal__btn-yes {
-        @include default-btn(150px, $color-white, $color-orange);
-        border: 2px solid $color-orange;
+        @include default-btn(150px, $color-white, $color-register);
       }
       .modal__btn-no {
-        @include default-btn(150px, $color-black, $color-white);
-        border: 2px solid $color-black;
+        @include default-btn(150px, $color-white, $color-red);
+        min-width: 80px;
+        @media (max-width: $phone-l) {
+          padding: 10px;
+          font-size: 14px;
+          line-height: 14px;
+        }
       }
     }
   }
