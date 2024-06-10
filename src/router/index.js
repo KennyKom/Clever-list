@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
-import MainPage from "../pages/MainPage.vue";
-import SignInPage from "../pages/SignInPage.vue";
-import SignUpPage from "../pages/SignUpPage.vue";
-import TaskByIdPage from "../pages/TaskByIdPage.vue";
-import TaskCreationPage from "../pages/TaskCreationPage.vue";
-import NotFoundPage from "../pages/NotFoundPage.vue";
+import MainPage from "../pages/Main.vue";
+import SignInPage from "../pages/SignIn.vue";
+import SignUpPage from "../pages/SignUp.vue";
+import TaskByIdPage from "../pages/TaskById.vue";
+import TaskCreationPage from "../pages/TaskCreation.vue";
+import NotFoundPage from "../pages/NotFound.vue";
 import store from "@/store";
 
 const routes = [

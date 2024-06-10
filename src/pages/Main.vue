@@ -20,8 +20,8 @@
 import BurgerMenu from "@/components/BurgerMenu";
 import DatesList from "@/components/DatesList";
 import TasksList from "@/components/TasksList";
-import fetchTasksMixin from "@/mixins/fetchTasksMixin.js";
-import toastMixin from "@/mixins/toastMixin.js";
+import fetchTasksMixin from "@/composables/fetchTasks.js";
+import toastMixin from "@/composables/toast.js";
 import { mapState, mapGetters } from "vuex";
 
 export default {
