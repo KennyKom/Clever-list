@@ -115,7 +115,7 @@ export default {
         align-items: center;
         padding: 10px;
         text-decoration: none;
-        transition: 0.3s;
+        transition: 0.29s;
         @media (max-width: $phone-l) {
           padding: 15px;
           font-size: 32px;
