@@ -4,7 +4,6 @@ import SignInPage from "../pages/SignIn.vue";
 import SignUpPage from "../pages/SignUp.vue";
 import TaskByIdPage from "../pages/TaskById.vue";
 import TaskCreationPage from "../pages/TaskCreation.vue";
-import NotFoundPage from "../pages/NotFound.vue";
 import store from "@/store";
 
 const routes = [
@@ -31,11 +30,6 @@ const routes = [
   {
     path: "/tasks/create-new-task",
     component: TaskCreationPage,
-    meta: { requiresAuth: true },
-  },
-  {
-    path: "/:catchAll(.*)",
-    component: NotFoundPage,
     meta: { requiresAuth: true },
   },
 ];
