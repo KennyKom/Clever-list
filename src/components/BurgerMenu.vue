@@ -1,6 +1,6 @@
 <template>
   <button class="burger-btn" @click="menuIsOpened = true"></button>
-  <teleport to=".global-container">
+  <teleport to="body">
     <div
       v-show="menuIsOpened"
       class="burger-menu"
@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import toastMixin from "@/mixins/toastMixin.js";
-import errorMsgMixin from "@/mixins/errorMsgMixin.js";
+import toastMixin from "@/composables/toast.js";
+import errorMsgMixin from "@/components/utils/errorMsg.js";
 import { mapState } from "vuex";
 import { signOutUser } from "@/services/firebase";
 
@@ -80,64 +80,46 @@ export default {
 .burger-menu {
   z-index: 1;
   position: fixed;
-  top: 0;
-  left: 0;
-  min-width: 100vw;
-  min-height: 100dvh;
+  top: 45px;
+  left: -45px;
+  width: 85vw;
+  height: 10dvh;
   display: flex;
   justify-content: flex-end;
-  // background-color: rgba(92, 92, 92, 0.159);
-  &__nav {
-    position: relative;
-    max-width: 70%;
-    width: 50%;
-    padding: 30px;
+  .burger-menu__nav-list {
+    margin-bottom: 10px;
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
-    background-color: $color-light-yellow;
-    @media (max-width: $tablet-l) {
-      padding: 20px;
-    }
-    @media (max-width: $phone-l) {
-      padding: 10px;
-    }
-    .burger-menu__nav-list {
-      margin-bottom: 50px;
+    align-items: center;
+    row-gap: 10px;
+    .burger-menu__nav-list-item {
+      border: 3px solid $color-yellow;
+      background-color: $color-yellow;
+      border-radius: 10px;
+      cursor: pointer;
       display: flex;
-      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      row-gap: 10px;
-      .burger-menu__nav-list-item {
+      transition: 0.3s;
+      &:hover {
+        transform: scale(1.2);
         border: 3px solid $color-yellow;
-        background-color: $color-yellow;
-        border-radius: 10px;
-        cursor: pointer;
+        .burger-menu__link {
+          color: $color-white;
+        }
+      }
+      .burger-menu__link {
+        @include default-text(18px, 18px, $color-white);
         display: flex;
         justify-content: center;
         align-items: center;
+        padding: 10px;
+        text-decoration: none;
         transition: 0.3s;
-        &:hover {
-          transform: scale(1.2);
-          border: 3px solid $color-yellow;
-          .burger-menu__link {
-            color: $color-white;
-          }
-        }
-        .burger-menu__link {
-          @include default-text(36px, 36px, $color-white);
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          padding: 20px;
-          text-decoration: none;
-          transition: 0.3s;
-          @media (max-width: $phone-l) {
-            padding: 15px;
-            font-size: 32px;
-            line-height: 32px;
-          }
+        @media (max-width: $phone-l) {
+          padding: 15px;
+          font-size: 32px;
+          line-height: 32px;
         }
       }
     }

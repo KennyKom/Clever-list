@@ -2,24 +2,32 @@
   <div class="sign-in-page">
     <form action="#" class="sign-in-page__form">
       <h2 class="sign-in-page__headline">Sign In</h2>
-      <input
-        v-model="email"
-        type="email"
-        name="email"
-        class="sign-in-page__email-input"
-        id="emailInput"
-        placeholder="Email"
-        required
-      />
-      <input
-        v-model="password"
-        type="password"
-        name="password"
-        class="sign-in-page__password-input"
-        id="passwordInput"
-        placeholder="Password"
-        required
-      />
+      <div :class="{ 'input-wrapper': true, 'input-error': emailError }">
+        <input
+          v-model="email"
+          type="email"
+          name="email"
+          class="sign-in-page__email-input"
+          id="emailInput"
+          placeholder="Email"
+          required
+        />
+        <span v-if="emailError" class="error-message">{{ emailError }}</span>
+      </div>
+      <div :class="{ 'input-wrapper': true, 'input-error': passwordError }">
+        <input
+          v-model="password"
+          type="password"
+          name="password"
+          class="sign-in-page__password-input"
+          id="passwordInput"
+          placeholder="Password"
+          required
+        />
+        <span v-if="passwordError" class="error-message">{{
+          passwordError
+        }}</span>
+      </div>
       <button
         class="sign-in-page__confirm-btn"
         @click.prevent="onConfirmBtnClicked"
@@ -42,8 +50,8 @@
 </template>
 
 <script>
-import toastMixin from "@/mixins/toastMixin.js";
-import errorMsgMixin from "@/mixins/errorMsgMixin.js";
+import toastMixin from "@/composables/toast.js";
+import errorMsgMixin from "@/components/utils/errorMsg.js";
 import { signInUser } from "@/services/firebase";
 
 export default {
@@ -56,13 +64,43 @@ export default {
       isLoading: false,
       email: "",
       password: "",
+      emailError: "",
+      passwordError: "",
     };
   },
 
   methods: {
+    validateInputs() {
+      let isValid = true;
+      this.emailError = "";
+      this.passwordError = "";
+
+      if (!this.email) {
+        this.emailError = "Email is required.";
+        isValid = false;
+      } else if (!/\S+@\S+\.\S+/.test(this.email)) {
+        this.emailError = "Email is invalid.";
+        isValid = false;
+      }
+
+      if (!this.password) {
+        this.passwordError = "Password is required.";
+        isValid = false;
+      } else if (this.password.length < 8) {
+        this.passwordError = "Password must be at least 8 characters.";
+        isValid = false;
+      }
+
+      return isValid;
+    },
+
     async onConfirmBtnClicked() {
+      if (!this.validateInputs()) {
+        return;
+      }
+
       this.isLoading = true;
-      this.setLoadingToast("Logging...");
+      this.setLoadingToast("Logging in...");
       try {
         await signInUser(this.email, this.password);
 
@@ -106,20 +144,33 @@ export default {
       text-align: center;
     }
 
-    .sign-in-page__email-input {
-      @extend %default-input;
-      background-color: $color-gr;
-      border: none;
-      outline: none;
+    .input-wrapper {
+      position: relative;
       margin-bottom: 20px;
-    }
 
-    .sign-in-page__password-input {
-      @extend %default-input;
-      background-color: $color-gr;
-      border: none;
-      outline: none;
-      margin-bottom: 40px;
+      .sign-in-page__email-input,
+      .sign-in-page__password-input {
+        @extend %default-input;
+        background-color: $color-gr;
+        border: none;
+        outline: none;
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+      }
+
+      .input-error .sign-in-page__email-input,
+      .input-error .sign-in-page__password-input {
+        border: 1px solid red;
+      }
+
+      .error-message {
+        position: absolute;
+        bottom: -20px;
+        left: 0;
+        font-size: 12px;
+        color: red;
+      }
     }
 
     .sign-in-page__confirm-btn {

@@ -16,6 +16,8 @@ export default {
 
 .Toastify__toast {
   cursor: default;
+  left: 575px;
+  top: -370px;
 }
 .Toastify__toast-body > div {
   cursor: text;

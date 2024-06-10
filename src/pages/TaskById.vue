@@ -120,9 +120,9 @@
 
 <script>
 import { format } from "date-fns";
-import toastMixin from "@/mixins/toastMixin.js";
-import fetchTasksMixin from "@/mixins/fetchTasksMixin.js";
-import taskValidationMixin from "@/mixins/taskValidationMixin.js";
+import toastMixin from "@/composables/toast.js";
+import fetchTasksMixin from "@/composables/fetchTasks.js";
+import taskValidationMixin from "@/components/utils/taskValid.js";
 import { mapState, mapMutations } from "vuex";
 import {
   loadUserTaskById,

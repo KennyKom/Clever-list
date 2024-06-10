@@ -23,7 +23,7 @@
           'dates-list-item__month-day_selected': isSelectedDay,
         }"
       >
-        {{ getDayOfDate }}
+        {{ getDayOfDate }} {{ getMonthAbbreviation }}
       </h4>
     </div>
     <div class="dates-list-item__dots-wrapper">
@@ -72,6 +72,25 @@ export default {
       const date = new Date(dateParts[5], dateParts[3] - 1, dateParts[1]);
       return date.getDate();
     },
+    getMonthAbbreviation() {
+      const monthNames = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
+      const dateParts = this.date.match(/(\d+)([/.-])(\d+)([/.-])(\d+)/);
+      const date = new Date(dateParts[5], dateParts[3] - 1, dateParts[1]);
+      return monthNames[date.getMonth()];
+    },
     isCurrentDay() {
       const today = new Date();
       const dateParts = this.date.match(/(\d+)([/.-])(\d+)([/.-])(\d+)/);
@@ -99,7 +118,7 @@ export default {
 @import "@/styles/global";
 
 .dates-list-item {
-  flex: 0 0 50px;
+  flex: 0 0 75px;
   display: flex;
   flex-direction: column;
   row-gap: 5px;
@@ -123,7 +142,6 @@ export default {
       border: 2px solid $color-black;
     }
     &_selected {
-      /* background-color: $color-orange; */
       border: 2px solid $color-orange;
     }
     .dates-list-item__week-day {
@@ -132,7 +150,7 @@ export default {
         color: $color-white;
       }
       &_selected {
-        color: $color-orange; // Это для текста выбранного дня, чтобы он был белым на оранжевом фоне
+        color: $color-orange;
       }
     }
     .dates-list-item__month-day {
@@ -141,7 +159,7 @@ export default {
         color: $color-white;
       }
       &_selected {
-        color: $color-orange; // Это для текста выбранного дня, чтобы он был белым на оранжевом фоне
+        color: $color-orange;
       }
     }
   }

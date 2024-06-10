@@ -2,33 +2,48 @@
   <div class="sign-up-page">
     <form action="#" class="sign-up-page__form">
       <h2 class="sign-up-page__headline">Sign Up</h2>
-      <input
-        v-model="email"
-        type="email"
-        name="email"
-        class="sign-up-page__email-input"
-        id="emailInput"
-        placeholder="Email"
-        required
-      />
-      <input
-        v-model="password"
-        type="password"
-        name="password"
-        class="sign-up-page__password-input"
-        id="passwordInput"
-        placeholder="Password"
-        required
-      />
-      <input
-        v-model="repeatPassword"
-        type="password"
-        name="repeat-password"
-        class="sign-up-page__repeat-password-input"
-        id="repeatPasswordInput"
-        placeholder="Repeat password"
-        required
-      />
+      <div :class="{ 'input-wrapper': true, 'input-error': emailError }">
+        <input
+          v-model="email"
+          type="email"
+          name="email"
+          class="sign-up-page__email-input"
+          id="emailInput"
+          placeholder="Email"
+          required
+        />
+        <span v-if="emailError" class="error-message">{{ emailError }}</span>
+      </div>
+      <div :class="{ 'input-wrapper': true, 'input-error': passwordError }">
+        <input
+          v-model="password"
+          type="password"
+          name="password"
+          class="sign-up-page__password-input"
+          id="passwordInput"
+          placeholder="Password"
+          required
+        />
+        <span v-if="passwordError" class="error-message">{{
+          passwordError
+        }}</span>
+      </div>
+      <div
+        :class="{ 'input-wrapper': true, 'input-error': repeatPasswordError }"
+      >
+        <input
+          v-model="repeatPassword"
+          type="password"
+          name="repeat-password"
+          class="sign-up-page__repeat-password-input"
+          id="repeatPasswordInput"
+          placeholder="Repeat password"
+          required
+        />
+        <span v-if="repeatPasswordError" class="error-message">{{
+          repeatPasswordError
+        }}</span>
+      </div>
       <button
         class="sign-up-page__confirm-btn"
         @click.prevent="onConfirmBtnClicked"
@@ -53,8 +68,8 @@
 </template>
 
 <script>
-import toastMixin from "@/mixins/toastMixin";
-import errorMsgMixin from "@/mixins/errorMsgMixin.js";
+import toastMixin from "@/composables/toast";
+import errorMsgMixin from "@/components/utils/errorMsg.js";
 import { signUpUser } from "@/services/firebase";
 
 export default {
@@ -68,34 +83,50 @@ export default {
       email: "",
       password: "",
       repeatPassword: "",
+      emailError: "",
+      passwordError: "",
+      repeatPasswordError: "",
     };
   },
 
   methods: {
-    getValidationError() {
+    validateInputs() {
+      let isValid = true;
+      this.emailError = "";
+      this.passwordError = "";
+      this.repeatPasswordError = "";
+
       const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
       if (!this.email) {
-        return "Email can not be empty!";
+        this.emailError = "Email cannot be empty!";
+        isValid = false;
       } else if (!emailRegex.test(this.email)) {
-        return "Email you have entered is invalid!";
+        this.emailError = "Email you have entered is invalid!";
+        isValid = false;
       }
 
-      if (this.password.length < 8) {
-        return "Password can not be shorter than 8 characters!";
+      if (!this.password) {
+        this.passwordError = "Password cannot be empty!";
+        isValid = false;
+      } else if (this.password.length < 8) {
+        this.passwordError = "Password cannot be shorter than 8 characters!";
+        isValid = false;
       } else if (this.password.length > 28) {
-        return "Password can not be longer than 28 characters!";
-      } else if (this.password !== this.repeatPassword) {
-        return "The entered passwords do not match!";
+        this.passwordError = "Password cannot be longer than 28 characters!";
+        isValid = false;
       }
 
-      return null;
-    },
-    async onConfirmBtnClicked() {
-      const errorMsg = this.getValidationError();
+      if (this.password !== this.repeatPassword) {
+        this.repeatPasswordError = "The entered passwords do not match!";
+        isValid = false;
+      }
 
-      if (errorMsg) {
-        this.setErrorToast(`Error! ${errorMsg}`);
+      return isValid;
+    },
+
+    async onConfirmBtnClicked() {
+      if (!this.validateInputs()) {
         return;
       }
 
@@ -145,28 +176,35 @@ export default {
       text-align: center;
     }
 
-    .sign-up-page__email-input {
-      @extend %default-input;
-      background-color: $color-gr;
-      border: none;
-      outline: none;
+    .input-wrapper {
+      position: relative;
       margin-bottom: 20px;
-    }
 
-    .sign-up-page__password-input {
-      @extend %default-input;
-      background-color: $color-gr;
-      border: none;
-      outline: none;
-      margin-bottom: 20px;
-    }
+      .sign-up-page__email-input,
+      .sign-up-page__password-input,
+      .sign-up-page__repeat-password-input {
+        @extend %default-input;
+        background-color: $color-gr;
+        border: none;
+        outline: none;
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+      }
 
-    .sign-up-page__repeat-password-input {
-      @extend %default-input;
-      background-color: $color-gr;
-      border: none;
-      outline: none;
-      margin-bottom: 40px;
+      .input-error .sign-up-page__email-input,
+      .input-error .sign-up-page__password-input,
+      .input-error .sign-up-page__repeat-password-input {
+        border: 1px solid red;
+      }
+
+      .error-message {
+        position: absolute;
+        bottom: -20px;
+        left: 0;
+        font-size: 12px;
+        color: red;
+      }
     }
 
     .sign-up-page__confirm-btn {
